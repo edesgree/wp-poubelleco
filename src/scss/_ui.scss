@@ -1,0 +1,22 @@
+.btn{
+    &.btn-primary{
+        background: $primary;
+        color:white;
+    }
+    &.btn-light{
+        background-color: $primary;
+        border:solid 1px $dark;
+        color:$dark;
+    }
+    &.btn-dark{
+        background-color: $dark;
+        border:solid 1px $primary;
+        color:white;
+        font-weight: 300;
+    }
+    text-decoration: none;
+}
+
+.heading-primary{
+    color:$primary;
+}

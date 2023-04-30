@@ -1,0 +1,22 @@
+/*
+  Theme Name: HTML5 Blank Slate
+  Theme URI: https://github.com/FernE97/html5-blank-slate
+  Description: Bootstrap 5 starter theme
+  Author: side•sea
+  Author URI: https://sidesea.com/
+  Version: 1.0.0
+  License: WTFPL
+  License URI: http://sam.zoy.org/wtfpl/
+  Tags: blank, html5, sass, responsive
+*/
+
+/**
+ * Theme is compiled from scss under /assets/scss/_theme.scss
+ *
+ * theme.css under /assets/css is the main compiled file
+ * which can be edited BUT will be overwritten once it
+ * gets compiled again.
+ *
+ * Use the custom.css file in the themes root directory
+ * if you are not using a workflow that compiles scss.
+ */
