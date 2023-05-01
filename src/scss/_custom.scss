@@ -50,8 +50,6 @@ body{
                     color:$primary;
                     margin-right: .4em;
                 }
-    
-                
             }
     
             @include media-breakpoint-up(lg) {
@@ -487,23 +485,9 @@ body{
 //page and text content
 .entry-content, .single-content{
     ul{
+
         font-weight: bold;
-        list-style-type: none;
-        margin-bottom: 10px;
-        padding-left: 0;
-        li{
-            display: flex;
-            gap:10px;
-            line-height: 1.75em;
-            &:before {
-                color:$primary;          
-                content: "\f0a9";
-                display: inline-flex;
-                font-family: $font-fa;
-                font-style: normal;
-                font-weight: 900;
-              }
-        }
+        @extend .list-arrow;
     }
 }
 
@@ -541,6 +525,7 @@ body{
     padding-top: .5em;
 }
 .list-links{
+    @extend .list-arrow;
     a{
         color:white;
         font-weight: normal;
@@ -569,3 +554,12 @@ body{
         border-radius: $border-radius-sm;
     }
 } 
+
+// blog listing
+.card-blog{
+    .card-footer{
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+    }
+}

@@ -20,3 +20,22 @@
 .heading-primary{
     color:$primary;
 }
+
+.list-arrow{
+    list-style-type: none;
+    margin-bottom: 10px;
+    padding-left: 0;
+    li{
+        display: flex;
+        gap:10px;
+        line-height: 1.75em;
+        &:before {
+            color:$primary;          
+            content: "\f0a9";
+            display: inline-flex;
+            font-family: $font-fa;
+            font-style: normal;
+            font-weight: 900;
+        }
+    }
+}

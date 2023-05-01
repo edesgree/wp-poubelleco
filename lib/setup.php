@@ -58,7 +58,7 @@ add_filter('previous_posts_link_attributes', 'h5bs_posts_link_attributes');
 
 function h5bs_posts_link_attributes()
 {
-  return 'class="btn btn-secondary btn-sm"';
+  return 'class="btn btn-dark btn-sm"';
 }
 
 function add_custom_class_to_post_link($html)
