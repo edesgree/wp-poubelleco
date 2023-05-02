@@ -31,7 +31,7 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
 			be provided with an instant quote on this product.</p>
 	</div>
 	<div id="single-product-autocomplete">
-		<form action="" autocomplete="off">
+		<form action="" class="form-autocomplete" autocomplete="off">
 			<input type="text" class="form-control" id="single-product-autocomplete-input"
 				placeholder="Enter your location">
 			<ul class="autocomplete-list" id="single-product-autocomplete-list">

@@ -1,71 +1,65 @@
 import depoLocations from '../assets/data/depo-locations.json';
-/*
-jQuery(document).ready(function($){
-    
 
-    var singleProductAutocompleteList ="";
-    locations.forEach(function(location){
-        singleProductAutocompleteList +="<li>";
-        singleProductAutocompleteList += location["Suburb"];
-        singleProductAutocompleteList +="</li>";
-    })
-    $('#single-product-autocomplete-list').append(singleProductAutocompleteList)
-})*/
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+
 const singleProductAutocompleteInput = document.getElementById('single-product-autocomplete-input');
 const singleProductAutocompleteList = document.getElementById('single-product-autocomplete-list');
 
 let locations = [];
-
+// get location param in url and fill in the input value
+if (urlParams.has('location')) {
+  singleProductAutocompleteInput.value = urlParams.get('location');
+}
 function fetchLocations() {
+  depoLocations.sort((a, b) => a.Suburb.localeCompare(b.Suburb));
   locations = depoLocations.map((item) => item.Suburb);
-  locations.sort();
-  //loadData(locations, singleProductAutocompleteList);
-  console.log(locations);
+}
+function getDistanceLabel(distance) {
+  let label = '';
+  if (distance > 0 && distance <= 25) {
+    label = '0-25km';
+  }
+  if (distance > 25 && distance <= 50) {
+    label = '25-50km';
+  }
+  if (distance > 50 && distance <= 75) {
+    label = '50-75km';
+  }
+  if (distance > 75 && distance <= 100) {
+    label = '75-100km';
+  }
+  if (distance > 100) {
+    label = '100km+';
+  }
+
+  return label;
 }
 function loadData(data, element) {
   let currentUrl = window.location.pathname;
-  console.log('data used:', data);
   if (data) {
     element.innerHTML = '';
     data.forEach((item) => {
-      let distance = '';
-      if (item['Distance'] > 0 && item['Distance'] <= 25) {
-        distance = '0-25km';
-      }
-      if (item['Distance'] > 25 && item['Distance'] <= 50) {
-        distance = '25-50km';
-      }
-      if (item['Distance'] > 50 && item['Distance'] <= 75) {
-        distance = '50-75km';
-      }
-      if (item['Distance'] > 75 && item['Distance'] <= 100) {
-        distance = '75-100km';
-      }
-      if (item['Distance'] > 100) {
-        distance = '100km+';
-      }
+      let distance = getDistanceLabel(item['Distance']);
       const li = document.createElement('li');
       let liContent = '';
       liContent += `
-      <a href="${currentUrl}?attribute_depo=${item['Depo']}&attribute_distance=${distance}&toto=${item['Distance']}">
-      ${item['Suburb']},${item['Postcode']}
+      <a href="${currentUrl}?attribute_depo=${item['Depo']}&attribute_distance=${distance}&location=${item['Suburb']}">
+      ${item['Suburb']}, ${item['Postcode']}
       </a>`;
-
       li.innerHTML = liContent;
       element.appendChild(li);
     });
   }
 }
 function filterData(data, searchText) {
-  let res = data.filter((item) => item.toLowerCase().includes(searchText));
-  console.log('res', res);
+  let res = data.filter((item) => item.Suburb.toLowerCase().includes(searchText));
   return res;
 }
 fetchLocations();
 
 singleProductAutocompleteInput.addEventListener('input', () => {
-  console.log('locations', locations);
-  const filteredData = filterData(locations, singleProductAutocompleteInput.value);
+  const filteredData = filterData(depoLocations, singleProductAutocompleteInput.value);
   console.log('filteredData', filteredData);
   loadData(filteredData, singleProductAutocompleteList);
 });

@@ -569,3 +569,29 @@ body{
         @extend .img-fluid;
     }
 }
+
+// Forms
+.form-autocomplete{
+    input[type="text"]{
+
+    }
+    .autocomplete-list{
+        background:white;
+        list-style-type: none;
+        padding-left: 0;
+        li{
+            border-bottom:solid 1px $gray-200;
+            
+            a{
+                color:$dark;
+                display: block;
+                font-size:.75em;
+                padding:2px;
+                text-decoration: none;
+                &:hover{
+                    background-color: $gray-400; 
+                }
+            }   
+        }
+    }
+}
