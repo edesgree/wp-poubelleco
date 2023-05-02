@@ -367,13 +367,7 @@ body{
                     width: 100%;
                  }
             }
-            .product-badges{
-                display: flex;
-                gap:5px;
-                justify-content: center;
-                    margin:15px 0;
-                
-            }
+            
             .row{
                 align-items: center;
             }
@@ -406,7 +400,12 @@ body{
           }
     }
 }
-
+.product-badges{
+    display: flex;
+    gap:5px;
+    justify-content: center;
+    margin:15px 0;
+}
 .product-specs-badge{
     align-items: center;
     background: $primary;
@@ -561,5 +560,12 @@ body{
         align-items: center;
         display: flex;
         justify-content: space-between;
+    }
+}
+
+// images responsive in post
+.post{
+    img{
+        @extend .img-fluid;
     }
 }

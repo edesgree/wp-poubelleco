@@ -16,6 +16,6 @@
   <div class="card-footer">
     <small class="text-muted"> <time datetime="<?php the_time('Y-m-d'); ?>" pubdate><?php the_time('F j, Y'); ?></time>
     </small>
-    <a href="" class="btn btn-dark btn-sm">Read Post</a>
+    <a href="<?php the_permalink(); ?>" class="btn btn-dark btn-sm">Read Post</a>
   </div>
 </article>

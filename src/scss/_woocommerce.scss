@@ -1,0 +1,75 @@
+.woocommerce,
+.woocommerce-page{
+    
+        div.product {
+            .single_add_to_cart_button.button{
+                @extend .btn;
+                @extend .btn-primary;
+            }
+            .wc-tabs{
+                display: none;
+            }
+            div.images{
+                float:none;
+                width:auto;
+            }
+            span.price{
+                color:white;
+            }
+            .product-single-features{
+                ul{
+                    @extend .list-arrow;
+                    padding-left: 0;
+                }
+            }
+            .product-left-wrapper{
+                background-color: $secondary-200;
+                border-radius: $border-radius-sm;
+                form.cart .button {
+                    border-bottom-left-radius: 0;
+                    border-bottom-right-radius: 0;
+                    color:$dark;
+                    display: block;
+                    float: none;
+                    font-weight: bold;
+                    text-transform:uppercase;
+                    width: 100%;
+                }
+            }
+            .woocommerce-product-gallery{
+                float:none!important;
+                width:auto!important;
+            }
+            .product-instant-quote-holder{
+                padding:15px 15px 0 15px;
+                .product-price-holder{
+                    background:black;
+                    border:dashed 2px $primary;
+                    border-radius: $border-radius-sm;
+                    font-size:1.5em;
+                    margin-bottom: 15px;
+                    padding:5px;
+                    .inc-gst{
+                        font-size:14px;
+                    }
+                }
+                
+            }
+            .woocommerce-variation-price{
+                background:black;
+                border:dashed 2px $primary;
+                border-radius: $border-radius-sm;
+                font-size:1.5em;
+                margin-bottom: 15px;
+                padding:5px;
+                .inc-gst{
+                    font-size:14px;
+                }
+            }
+            .summary{
+                float:none!important;
+                width:auto!important;
+            }
+        }
+
+}

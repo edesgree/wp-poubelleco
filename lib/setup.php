@@ -146,3 +146,19 @@ function h5bs_comments($comment, $args, $depth)
     <?php // WordPress closes </li>
   endif;
 }
+
+// Responsive images (bootstrap class)
+add_filter('get_image_tag_class', 'bootstrap_add_image_class');
+
+function bootstrap_add_image_class($class)
+{
+  $class .= ' img-fluid';
+  return $class;
+}
+
+// woocommerce setup
+function mytheme_add_woocommerce_support()
+{
+  add_theme_support('woocommerce');
+}
+add_action('after_setup_theme', 'mytheme_add_woocommerce_support');

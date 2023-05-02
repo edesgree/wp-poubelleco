@@ -17,13 +17,15 @@ get_header(); ?>
 <div class="post-header-metadata">
   <div class="container">
     <div class="row">
-      <div class="col-lg-3">
+      <div class="col-lg-4">
         <i class="fa fa-calendar"></i> Post Date:
         <time datetime="<?php the_time('Y-m-d'); ?>" pubdate><?php the_time('F j, Y'); ?></time>
       </div>
       <div class="col-lg-6">
-        <i class="fa fa-bars"></i> Post Category:
-        <?php echo get_the_category()[0]->cat_name; ?>
+        <?php if (has_category()) { ?>
+          <i class="fa fa-bars"></i> Post Category:
+          <?php echo get_the_category()[0]->cat_name; ?>
+        <?php } ?>
       </div>
     </div>
   </div>
