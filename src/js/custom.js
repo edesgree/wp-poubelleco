@@ -1,10 +1,21 @@
 import depoLocations from '../assets/data/depo-locations.json';
 
+jQuery(document).ready(function ($) {
+  $('.variations_form').on('woocommerce_variation_select_change', function () {
+    $('#single-product-price-placeholder').show(0);
+  });
+
+  $('.single_variation_wrap').on('show_variation', function (event, variation) {
+    $('#single-product-price-placeholder').hide(0);
+  });
+});
+
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
 const singleProductAutocompleteInput = document.getElementById('single-product-autocomplete-input');
 const singleProductAutocompleteList = document.getElementById('single-product-autocomplete-list');
+const singleProductAutocompleteWrap = document.getElementById('single-product-autocomplete');
 
 let locations = [];
 // get location param in url and fill in the input value
@@ -58,64 +69,22 @@ function filterData(data, searchText) {
 }
 fetchLocations();
 
-singleProductAutocompleteInput.addEventListener('input', () => {
+singleProductAutocompleteInput.addEventListener('input', (e) => {
   const filteredData = filterData(depoLocations, singleProductAutocompleteInput.value);
   console.log('filteredData', filteredData);
   loadData(filteredData, singleProductAutocompleteList);
+  e.target.classList.add('active');
+  console.log(e.target);
 });
 
-/*
-function autocomplete({target} listElement, data) {
-    inputElement.addEventListener('input', async () => {
-      const inputValue = inputElement.value.toLowerCase();
-      
-      const filteredData = data.filter(item => item['Suburb'].toLowerCase().startsWith(inputValue));
-      displayAutocompleteList(listElement, filteredData);
-      console.log(filteredData)
-    });
-    listElement.addEventListener('click', event => {
-        if (event.target.tagName === 'LI') {
-          inputElement.value = event.target.textContent;
-          listElement.innerHTML = '';
-        }
-      });
-  }
-  
-  function displayAutocompleteList(listElement, data) {
-    let currentUrl = window.location.pathname;
+singleProductAutocompleteWrap.addEventListener('blur', (e) => {
+  console.log('blur');
+  singleProductAutocompleteList.style.display = 'none';
+  singleProductAutocompleteInput.classList.remove('active');
+});
 
-    listElement.innerHTML = '';
-    data.forEach(item => {
-        let distance = '';
-      if (item['Distance'] > 0 && item['Distance'] <= 25) {
-        distance = '0-25km'
-      }
-      if (item['Distance'] > 25 && item['Distance'] <= 50) {
-        distance = '25-50km'
-      }
-      if (item['Distance'] > 50 && item['Distance'] <= 75) {
-        distance = '50-75km'
-      }
-      if (item['Distance'] > 75 && item['Distance'] <= 100) {
-        distance = '75-100km'
-      }
-      if (item['Distance'] > 100) {
-        distance = '100km+'
-      }
-      const li = document.createElement('li');
-      let liContent='';
-      liContent += `
-      <a href="${currentUrl}?attribute_depo=${item['Depo']}&attribute_distance=${distance}&toto=${item['Distance']}">
-      ${item['Suburb']},${item['Postcode']}
-      </a>`;
-
-      li.innerHTML = liContent;
-      listElement.appendChild(li);
-    });
-  }
-  
-  singleProductAutocompleteInput.addEventListener('input',e =>{
-    autocomplete(this, autocompleteList, locations);
-  }) 
-
-  */
+singleProductAutocompleteInput.addEventListener('focus', (e) => {
+  console.log('focus');
+  singleProductAutocompleteList.style.display = 'block';
+  //e.target.classList.add('active');
+});

@@ -93,6 +93,10 @@ body{
                     font-weight: bold;
                     padding:0 15px;
                     text-transform: uppercase;
+                    &.active,&:active{
+                        background:black;
+
+                    }
                 }
                 &.current-menu-item a{
                     color:$primary;
@@ -353,6 +357,11 @@ body{
             overflow: hidden;
             padding-bottom: 30px;
             position: relative;
+            transition: ease .25s all;
+            &:hover{
+                box-shadow: 0 5px 30px 0 rgba(0,0,0,.15);
+                transform: scale(1.0125);
+            }
             .btn-secondary{
                 border-bottom-left-radius: 0;
                 border-bottom-right-radius: 0;
@@ -378,7 +387,7 @@ body{
     }
 }
 
-.list-specs{
+.list-specs,.list-specs-wrap ul{
     list-style-type: none;
     margin-bottom: 10px;
     padding-left: 0;
@@ -392,11 +401,6 @@ body{
             font-family: $font-fa;
             font-style: normal;
             font-weight: 900;
-            height: 0;
-            line-height: 1;
-            position: relative;
-            top:.25em;
-            width: 0;
           }
     }
 }
@@ -573,15 +577,23 @@ body{
 // Forms
 .form-autocomplete{
     input[type="text"]{
-
+        &.active{
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
     }
     .autocomplete-list{
         background:white;
+        border-bottom-left-radius: $border-radius-sm;
+        border-bottom-right-radius: $border-radius-sm;
         list-style-type: none;
+        overflow: hidden;
         padding-left: 0;
         li{
+           &:not(:last-of-type){
             border-bottom:solid 1px $gray-200;
             
+           }
             a{
                 color:$dark;
                 display: block;

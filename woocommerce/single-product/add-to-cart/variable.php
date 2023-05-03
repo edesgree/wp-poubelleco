@@ -35,12 +35,12 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
 			<input type="text" class="form-control" id="single-product-autocomplete-input"
 				placeholder="Enter your location">
 			<ul class="autocomplete-list" id="single-product-autocomplete-list">
-
 			</ul>
 		</form>
-
 	</div>
-
+	<div id="single-product-price-placeholder" class="product-price-holder">
+		Fill in the details above
+	</div>
 	<form class="variations_form cart"
 		action="<?php echo esc_url(apply_filters('woocommerce_add_to_cart_form_action', $product->get_permalink())); ?>"
 		method="post" enctype='multipart/form-data' data-product_id="<?php echo absint($product->get_id()); ?>"
