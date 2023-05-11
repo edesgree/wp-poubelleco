@@ -53,7 +53,10 @@
                         font-size:14px;
                     }
                 }
-                
+                //hide variations
+                table.variations{
+                    display: none;
+                }
             }
             .woocommerce-variation-price{
                 background:black;

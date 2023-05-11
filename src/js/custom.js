@@ -16,10 +16,16 @@ const urlParams = new URLSearchParams(queryString);
 const singleProductAutocompleteInput = document.getElementById('single-product-autocomplete-input');
 const singleProductAutocompleteList = document.getElementById('single-product-autocomplete-list');
 const singleProductAutocompleteWrap = document.getElementById('single-product-autocomplete');
-
+const headerAutocompleteWrap = document.getElementById('header-search-autocomplete');
+const headerAutocompleteInput = document.getElementById('header-autocomplete-input');
+const headerAutocompleteList = document.getElementById('header-autocomplete-list');
+const headerAutocompleteCloseBtn = document.getElementById('search-input-reset');
+const headerQuickSelectBinsWrap = document.getElementById('quick-select-bins');
+const HeaderQuickSelectBinsSuburbSelectedTitle = document.getElementById('quick-select-suburb-selected');
+const HeaderQuickSelectBinsProduct = document.querySelectorAll('[data-quick-select-product]');
 let locations = [];
 // get location param in url and fill in the input value
-if (urlParams.has('location')) {
+if (urlParams.has('location') && singleProductAutocompleteInput) {
   singleProductAutocompleteInput.value = urlParams.get('location');
 }
 function fetchLocations() {
@@ -46,7 +52,74 @@ function getDistanceLabel(distance) {
 
   return label;
 }
-function loadData(data, element) {
+
+function displaySearchResultHeader(data, element) {
+  let currentUrl = window.location.pathname;
+  if (data) {
+    element.innerHTML = '';
+    data.forEach((item) => {
+      let distance = getDistanceLabel(item['Distance']);
+      const li = document.createElement('li');
+      let liContent = '';
+      liContent += `
+      <a href="#" data-search-result
+      data-distance="${distance}" 
+      data-depo="${item['Depo']}"
+      data-suburb="${item['Suburb']}"
+      >
+      ${item['Suburb']}, ${item['Postcode']},  ${distance}, ${item['Depo']}, 
+      </a>`;
+      li.innerHTML = liContent;
+      element.appendChild(li);
+    });
+  }
+  function headerShortcodeProducts(item) {
+    console.log('headerShortcodeProducts', item);
+    resetHeaderAutocomplete();
+    let depo = item.dataset.depo;
+    let distance = item.dataset.distance;
+    let suburb = item.dataset.suburb;
+    console.log('depo', depo);
+    console.log('distance', distance);
+
+    headerAutocompleteInput.value = suburb;
+    headerQuickSelectBinsWrap.classList.add('active');
+
+    //hide autocomplete
+    //show results quick bins
+    HeaderQuickSelectBinsProduct.forEach((el) => {
+      let productid = el.dataset.productid;
+
+      console.log(el);
+      //show good price
+      document.querySelectorAll('.depo-price').forEach((el) => {
+        console.log(el);
+        if (el.dataset.depo === depo && el.dataset.distance === distance) {
+          el.classList.add('active');
+        } else {
+          el.classList.remove('active');
+        }
+
+        var productid = jQuery(this).data('productid');
+      });
+
+      //edit button link
+      console.log(el.querySelector('[data-add-to-cart]').getAttribute('href'));
+      el.querySelector('[data-add-to-cart]').setAttribute(
+        'href',
+        `/?add-to-cart=${productid}&attribute_depo=${depo}&attribute_distance=${distance}`
+      );
+    });
+  }
+
+  // Add event listener to each element with the data-toto attribute
+  document.querySelectorAll('[data-search-result]').forEach((el) => {
+    el.addEventListener('click', function (e) {
+      headerShortcodeProducts(e.target);
+    });
+  });
+}
+function displaySearchResultSingleProduct(data, element) {
   let currentUrl = window.location.pathname;
   if (data) {
     element.innerHTML = '';
@@ -69,22 +142,49 @@ function filterData(data, searchText) {
 }
 fetchLocations();
 
-singleProductAutocompleteInput.addEventListener('input', (e) => {
-  const filteredData = filterData(depoLocations, singleProductAutocompleteInput.value);
-  console.log('filteredData', filteredData);
-  loadData(filteredData, singleProductAutocompleteList);
+// autocomplete header:
+
+headerAutocompleteInput.addEventListener('input', (e) => {
+  const filteredData = filterData(depoLocations, headerAutocompleteInput.value);
+  if (headerAutocompleteInput.value != '') {
+    displaySearchResultHeader(filteredData, headerAutocompleteList);
+    headerAutocompleteList.style.display = 'block';
+  } else {
+    headerAutocompleteList.style.display = 'none';
+    headerQuickSelectBinsWrap.classList.remove('active');
+  }
+
   e.target.classList.add('active');
-  console.log(e.target);
 });
+function resetHeaderAutocomplete() {
+  console.log('resetHeaderAutocomplete');
+  headerAutocompleteInput.value = '';
+  headerAutocompleteList.style.display = 'none';
+  headerAutocompleteInput.classList.remove('active');
+  headerQuickSelectBinsWrap.classList.remove('active');
+}
 
-singleProductAutocompleteWrap.addEventListener('blur', (e) => {
-  console.log('blur');
-  singleProductAutocompleteList.style.display = 'none';
-  singleProductAutocompleteInput.classList.remove('active');
+headerAutocompleteInput.addEventListener('focus', (e) => {
+  headerAutocompleteCloseBtn.classList.add('active');
 });
+headerAutocompleteCloseBtn.addEventListener('click', (e) => {
+  resetHeaderAutocomplete();
+  e.currentTarget.classList.remove('active');
+});
+// autocomplete product page:
+if (singleProductAutocompleteInput) {
+  singleProductAutocompleteInput.addEventListener('input', (e) => {
+    const filteredData = filterData(depoLocations, singleProductAutocompleteInput.value);
+    displaySearchResultSingleProduct(filteredData, singleProductAutocompleteList);
+    e.target.classList.add('active');
+  });
 
-singleProductAutocompleteInput.addEventListener('focus', (e) => {
-  console.log('focus');
-  singleProductAutocompleteList.style.display = 'block';
-  //e.target.classList.add('active');
-});
+  singleProductAutocompleteWrap.addEventListener('blur', (e) => {
+    singleProductAutocompleteList.style.display = 'none';
+    singleProductAutocompleteInput.classList.remove('active');
+  });
+
+  singleProductAutocompleteInput.addEventListener('focus', (e) => {
+    singleProductAutocompleteList.style.display = 'block';
+  });
+}

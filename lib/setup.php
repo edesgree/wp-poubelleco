@@ -148,13 +148,16 @@ function h5bs_comments($comment, $args, $depth)
 }
 
 // Responsive images (bootstrap class)
-add_filter('get_image_tag_class', 'bootstrap_add_image_class');
-
-function bootstrap_add_image_class($class)
+function add_img_fluid_class($html, $attachment_id, $size, $icon, $attr)
 {
-  $class .= ' img-fluid';
-  return $class;
+  $classes = isset($attr['class']) ? $attr['class'] : '';
+  $classes .= ' img-fluid';
+  $attr['class'] = trim($classes);
+  $img_tag = wp_get_attachment_image($attachment_id, $size, $icon, $attr);
+  return $img_tag;
 }
+add_filter('wp_get_attachment_image', 'add_img_fluid_class', 10, 5);
+
 
 // woocommerce setup
 function mytheme_add_woocommerce_support()
